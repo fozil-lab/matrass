@@ -31,6 +31,7 @@ const Login = async (username,password) => {
    try {
        let user = await fetch(`select * from users where username = $1 and password = md5($2)`,username,password)
        user.user_img = 'http://localhost:4500/' + user.user_img
+       console.log(user)
        return user
    } catch (err) {
        return err
