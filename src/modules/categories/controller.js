@@ -63,7 +63,8 @@ const DELETE = async (req,res) => {
     }{
         res.send({
             status:400,
-            message:'bad request'
+            message:'bad request',
+            err:response.message
         })
     }
 }
