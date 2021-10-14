@@ -3,6 +3,8 @@ const fileUpload = require('express-fileupload')
 const path = require('path')
 const modules = require('./modules')
 
+const PORT = process.env.PORT || 4500
+
 const app = express()
 
 app.use(express.json());
@@ -16,4 +18,4 @@ app.get('/', (req,res) => res.send('you successfully connection server'))
 
 
 
-app.listen(4500,()=> console.log('Server is running http://localhost:4500'));
+app.listen(PORT,()=> console.log('Server is running http://localhost:' + PORT));
