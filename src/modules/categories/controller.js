@@ -1,9 +1,9 @@
 const model = require('./model')
 
 const POST = async (req,res) => {
-    const {categoryName} = req.body
+    const {categoryName,active} = req.body
     if (categoryName){
-        let response = await model.insert(categoryName)
+        let response = await model.insert(categoryName,active ? active : true)
         if (response){
             res.send({
                 status:201,

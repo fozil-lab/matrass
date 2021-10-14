@@ -3,9 +3,9 @@ const  path = require('path')
 const  fs = require('fs')
 
 
-const insert =(categoryName) => {
+const insert =(categoryName,active) => {
     try {
-        let categories = fetch('insert into categories (category_name) values ($1) RETURNING*',categoryName)
+        let categories = fetch('insert into categories (category_name,active) values ($1) RETURNING*',categoryName,active ? active : true)
         return categories
     } catch (err){
         console.log(err)
