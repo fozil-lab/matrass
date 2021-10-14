@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4500
 const app = express()
 
 app.use(express.json());
-app.use( express.static(path.join(__dirname, 'uploads', 'images')) )
+app.use( express.static(process.env.PWD + path.join(__dirname, 'uploads', 'images')) )
 app.use(fileUpload({ safeFileNames: true, preserveExtension: true }));
 
 app.use(modules)
