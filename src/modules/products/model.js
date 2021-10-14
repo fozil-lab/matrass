@@ -48,7 +48,7 @@ const fetchProducts = async () => {
             delete productElement.category_id
             let images = productElement.img_links
             for (let i = 0; i < images.length; i++) {
-                images[i] = 'http://localhost:4500/' + images[i]
+                images[i] = 'https://matras-app.herokuapp.com/' + images[i]
             }
         }
         return products
@@ -94,6 +94,9 @@ const deleteProducts = async (id) => {
 const fetchOne = async (id) => {
     let product = await fetch('select * from products p inner join categories c using(category_id) where p.product_id = $1',id)
     delete product.category_id
+    for (let imgLink of product.img_links) {
+        imgLink = 'https://matras-app.herokuapp.com/' + imgLink
+    }
     return product
 }
 
