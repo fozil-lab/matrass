@@ -1,11 +1,7 @@
 const pg = require('pg')
 
 const pool = new pg.Pool({
-	user: 'postgres',
-	password: 'fozil2003',
-	port: 5432,
-	host: 'localhost',
-	database: 'matras'
+	connectionString: 'postgres://xxtzfrrp:Zx6TPrz_mjcxstIcVq4WHChjOQ38v6Jq@fanny.db.elephantsql.com/xxtzfrrp'
 })
 
 

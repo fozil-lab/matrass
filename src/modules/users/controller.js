@@ -8,7 +8,7 @@ const POST = (req,res) => {
         if (response){
             res.send({
                 status:201,
-                message:'the date created'
+                message:'the data created'
             })
         }else{
             res.send({
@@ -25,7 +25,7 @@ const GET = async (req,res) => {
         if (response){
             res.send({
                 status:200,
-                message:'the date created',
+                message:'the data successfully fetched',
                 data:await response
             })
         }else{
@@ -38,30 +38,69 @@ const GET = async (req,res) => {
 }
 
 const LOGIN = async (req,res) => {
-    const {username,password} = req.body
-    console.log(username,password)
-    if (username && password){
-        let response = await model.Login(username,password)
+    try {
+        const {username,password} = req.body
+        if (username && password){
+            let response = await model.Login(username,password)
+            let token = sign({userId:response.user_id},'MyNaMeIsFoZiL')
+            if (response.user_id){
+                res.send({
+                    status:200,
+                    message:'you successfully logged in',
+                    data:response,
+                    token:token,
+                })
+            }else{
+                res.send({
+                    status:404,
+                    message:"usrname or password wrong"
+                })
+            }
+        }
+    }catch (err) {
+        console.log(err)
+    }
+}
+
+const PUT = async (req,res) => {
+    const {file} = req.files
+    console.log(req.body)
+    if (file && req.body != null){
+        let response = await model.updateUser(file,req.body)
         console.log(response)
-        let token = sign({id:response.user_id},'MyNaMeIsFoZiL')
         if (response){
             res.send({
                 status:200,
-                message:'you successfully logged in',
-                data:response,
-                token:token,
+                message:'the data updated',
             })
         }else{
             res.send({
                 status:404,
-                message:'username or password wrong'
+                message:'something wrong'
             })
         }
+    }
+}
+
+const DELETE = async (req,res) => {
+    let response = await model.deleteUser(req.body.id)
+    if (response){
+        res.send({
+            status:200,
+            message:'the data deleted',
+        })
+    }else{
+        res.send({
+            status:404,
+            message:'something wrong'
+        })
     }
 }
 
 module.exports = {
     POST,
     GET,
-    LOGIN
+    LOGIN,
+    PUT,
+    DELETE
 }

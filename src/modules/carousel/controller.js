@@ -1,16 +1,16 @@
 const model = require('./model')
 const {body,validationResult} = require('express-validator')
 
-const POST = (req,res) => {
+const POST = async (req,res) => {
     const {title} = req.body
     const {file} = req.files
     if (file && title){
-        let response = model.insert(file,title)
-        console.log(response)
+        let response = await model.insert(file,title)
         if (response){
             res.send({
                 status:201,
-                message: 'The data successfully created'
+                message: 'The data successfully created',
+                data: await response
             })
         }
     }else{

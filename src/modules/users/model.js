@@ -1,5 +1,6 @@
 const {fetch,fetchAll} = require('../../lib/postgres')
 const path = require('path')
+const fs = require('fs')
 
 const insert = async (file,{firstName,lastName,username,password}) => {
     try {
@@ -29,9 +30,8 @@ const fetchUsers = async () => {
 const Login = async (username,password) => {
 
    try {
-       let user = await fetch(`select * from users where username = $1 and password = md5($2)`,username,password)
+       let user = await fetch(`select * from users where username = $1 and password = md5($2) and deleted = false`,username,password)
        user.user_img = 'http://localhost:4500/' + user.user_img
-       console.log(user)
        return user
    } catch (err) {
        return err
@@ -39,8 +39,32 @@ const Login = async (username,password) => {
 
 }
 
+const updateUser = async (file,{id,firstName,lastName,password,username}) => {
+    try {
+        let user = await fetch('select * from users where user_id = $1',id)
+        console.log(await user)
+        console.log(file.name)
+        fs.unlinkSync(path.join(process.cwd(),'src','uploads','images',user.user_img))
+        file.mv(path.join(process.cwd(),'src','uploads','images',file.name))
+        let response = await fetch(
+            'update users set first_name = $1,last_name = $2, username = $3, password = md5($4), user_img = $5 where user_id = $6 RETURNING',
+            firstName,lastName,username,password,file.name,id
+        )
+        return true
+    }catch (err) {
+        console.log(err)
+    }
+}
+
+const deleteUser = async (id) => {
+    await fetch('update users set deleted = true')
+    return true
+}
+
 module.exports = {
     insert,
     fetchUsers,
-    Login
+    Login,
+    updateUser,
+    deleteUser
 }
