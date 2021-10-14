@@ -31,7 +31,8 @@ const Login = async (username,password) => {
 
    try {
        let user = await fetch(`select * from users where username = $1 and password = md5($2) and deleted = false`,username,password)
-       user.user_img = 'http://localhost:4500/' + user.user_img
+       user.user_img = 'https://matras-app.herokuapp/' + user.user_img
+       delete user.password
        return user
    } catch (err) {
        return err
