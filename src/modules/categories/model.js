@@ -33,7 +33,7 @@ const updateCategory = async (id,categoryName) => {
 
 const deleteCategory = async (id) => {
     try{
-        let category = await fetch('update categories set deleted = false where category_id = $1',id)
+        let category = await fetch('update categories set deleted = true where category_id = $1',id)
         return true
     } catch (err) {
         console.log(err)
