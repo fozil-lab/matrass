@@ -11,7 +11,7 @@ app.use(fileUpload({ safeFileNames: true, preserveExtension: true }));
 
 app.use(modules)
 
-
+app.get('/', (req,res) => res.send('you successfully connection server'))
 
 
 
