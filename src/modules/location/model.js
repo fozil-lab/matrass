@@ -18,6 +18,11 @@ const insert = async (file,{location,text,address}) => {
 
 const fetchLocation = async () => {
     let location = await fetchAll('select * from geo_location where deleted = false')
+    for (let locationElement of location) {
+        for (let imgLinkElement of locationElement.img_link) {
+            imgLinkElement = 'http://localhost:4500/' + imgLinkElement
+        }
+    }
     return location
 }
 

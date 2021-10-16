@@ -17,7 +17,7 @@ const insert =(file,title) => {
 const fetchCarousel = async () => {
     let response = await fetchAll('select * from carousel where active = true');
     for (let carousel of response) {
-        carousel.img_link = 'https://matras-app.herokuapp.com/' + carousel.img_link
+        carousel.img_link = 'http://localhost:4500/' + carousel.img_link
     }
     console.log(response)
     return response

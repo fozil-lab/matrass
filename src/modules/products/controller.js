@@ -1,18 +1,18 @@
 const model = require('./model')
 
-const POST  = (req,res) => {
+const POST  = async (req,res) => {
     const {file} = req.files
     if (req.body != null){
-        let response = model.insert(file,req.body)
-        if (response){
+        let response = await model.insert(file,req.body)
+        if (response.product_id){
             res.send({
                 status:201,
                 message:'the date created'
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }
