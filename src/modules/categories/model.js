@@ -1,7 +1,4 @@
 const {fetch,fetchAll} = require('../../lib/postgres')
-const  path = require('path')
-const  fs = require('fs')
-
 
 const insert =(categoryName,active) => {
     try {
