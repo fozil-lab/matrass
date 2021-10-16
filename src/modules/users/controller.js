@@ -1,10 +1,10 @@
 const model = require('./model')
 const {sign,verify} = require('jsonwebtoken')
 
-const POST = (req,res) => {
+const POST = async (req,res) => {
     const {file} = req.files
     if (file && req.body != null){
-        let response = model.insert(file,req.body)
+        let response = await model.insert(file,req.body)
         if (response){
             res.send({
                 status:201,

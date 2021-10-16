@@ -7,12 +7,12 @@ const insert = async (file,{firstName,lastName,username,password}) => {
         file.mv(path.join(process.cwd(),'src','uploads','images',file.name))
         let fileName = file.name
 
-        await fetch(`insert into users 
+        let user = await fetch(`insert into users 
          (first_name,username,password,last_name,user_img) 
-         values ($1,$2,md5($3),$4,$5)`
+         values ($1,$2,md5($3),$4,$5) RETURNING*`
             ,firstName,username,password,lastName,fileName
         )
-        return true
+        return user
     }catch (err) {
         return err
     }
