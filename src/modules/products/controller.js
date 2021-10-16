@@ -29,8 +29,8 @@ const GET = async (req,res) => {
         })
     }else{
         res.send({
-            status:404,
-            message:'something wrong'
+            status:400,
+            message:'bad request'
         })
     }
 }
@@ -48,8 +48,8 @@ const PUT = (req,res) => {
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }
@@ -66,8 +66,8 @@ const DELETE = (req,res) => {
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }
@@ -85,8 +85,8 @@ const FETCH = async (req,res) => {
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }

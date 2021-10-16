@@ -3,7 +3,7 @@ const { POST,GET,LOGIN,PUT,DELETE } = require('./controller.js')
 
 
 router.route('/users')
-    .post( POST )
+    .post(POST)
     .get(GET)
     .put(PUT)
     .delete(DELETE)

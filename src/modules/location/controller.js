@@ -13,19 +13,19 @@ const POST = async (req,res) => {
         }else if (!response){
             res.send({
                 status:400,
-                message:'bad request'
+                message:"bad request"
             })
         }
     }
 }
 
 const GET = async (req,res) => {
-   let orders = await model.fetchOrders()
-    if (orders){
+    let location = await model.fetchLocation()
+    if (location){
         res.send({
             status:200,
-            message:'all orders successfully fetched',
-            data: orders
+            message:'all location successfully fetched',
+            data: location
         })
     }else{
         res.send({
@@ -36,13 +36,12 @@ const GET = async (req,res) => {
 }
 
 const PUT = async (req,res) => {
-    const {id,active} = req.body
-    if (id && active){
-        let response = await model.updateOrders(id,active)
+    if (req.body != null){
+        let response = await model.updateLocation(req.body)
         if (response){
             res.send({
                 status:200,
-                message:'the order updated',
+                message:'the location updated',
             })
         }else{
             res.send({
@@ -52,8 +51,29 @@ const PUT = async (req,res) => {
         }
     }
 }
+
+const DELETE = (req,res) => {
+    const {id} = req.body
+    if (id){
+        let response = model.deleteLocation(id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the location deleted',
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
+    DELETE
 }

@@ -60,7 +60,6 @@ const fetchProducts = async () => {
 const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami,sigimi,description,category,status,aksiyaPrice,active}) => {
     try {
         let product = await fetch('select * from products where product_id = $1',id);
-        console.log(file)
         let imgLinks = []
         for (let imgLink of product.img_links) {
             fs.unlink(path.join(process.cwd(),'src','uploads','images',imgLink), (err) => console.log(err))

@@ -1,5 +1,4 @@
 const model = require('./model')
-const {body,validationResult} = require('express-validator')
 
 const POST = async (req,res) => {
     const {title} = req.body

@@ -13,19 +13,19 @@ const POST = async (req,res) => {
         }else if (!response){
             res.send({
                 status:400,
-                message:'bad request'
+                message:"bad request"
             })
         }
     }
 }
 
 const GET = async (req,res) => {
-   let orders = await model.fetchOrders()
-    if (orders){
+    let stats = await model.fetchStats()
+    if (stats){
         res.send({
             status:200,
-            message:'all orders successfully fetched',
-            data: orders
+            message:'all stats successfully fetched',
+            data: stats
         })
     }else{
         res.send({
@@ -36,9 +36,8 @@ const GET = async (req,res) => {
 }
 
 const PUT = async (req,res) => {
-    const {id,active} = req.body
-    if (id && active){
-        let response = await model.updateOrders(id,active)
+    if (req.body != null){
+        let response = await model.updateStats(req.body)
         if (response){
             res.send({
                 status:200,
@@ -52,8 +51,9 @@ const PUT = async (req,res) => {
         }
     }
 }
+
 module.exports = {
     POST,
     GET,
-    PUT,
+    PUT
 }

@@ -11,7 +11,27 @@ const insert = async ({product,clientContact,clientName,count}) => {
     return order
 }
 
+const fetchOrders = async () => {
+    try{
+        let orders = await fetch('select * from orders o inner join products p using(product_id)')
+        for (let order of orders) {
+            delete order.product_id
+        }
+        return orders
+    } catch(err){
+        console.log(err)
+    }
+}
+
+const updateOrders = async (id,active) => {
+    let order = await fetch('update orders set active = $1 where order_id = $2 RETURNING*',active,id)
+    return order
+}
+
+
 
 module.exports = {
-    insert
+    insert,
+    fetchOrders,
+    updateOrders
 }

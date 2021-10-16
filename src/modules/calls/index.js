@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const { POST,GET,PUT,DELETE } = require('./controller.js')
-
+const checkToken = require('../../middlewares/checkToken')
 router.route('/calls')
-    .post( POST )
+    .post(checkToken,POST )
     .get(GET)
-    .put(PUT)
-    .delete(DELETE)
+    .put(checkToken,PUT)
+    .delete(checkToken,DELETE)
 module.exports = router

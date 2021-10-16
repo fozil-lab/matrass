@@ -4,6 +4,9 @@ const productsRouter = require('./products')
 const usersRouter = require('./users')
 const ordersRouter = require('./orders')
 const categoriesRouter = require('./categories')
+const locationRouter = require('./location')
+const technologiesRouter = require('./technologies')
+const statisticsRouter = require('./statistics')
 
 module.exports = [
     carouselRouter,
@@ -11,5 +14,8 @@ module.exports = [
     productsRouter,
     usersRouter,
     ordersRouter,
-    categoriesRouter
+    categoriesRouter,
+    technologiesRouter,
+    locationRouter,
+    statisticsRouter
 ]

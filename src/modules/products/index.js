@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const { POST,GET,PUT,DELETE } = require('./controller.js')
 const {FETCH} = require("./controller");
-
+const checkToken = require('../../middlewares/checkToken')
 router.route('/products')
-    .post( POST )
+    .post(checkToken,POST)
     .get( GET )
-    .put(PUT)
-    .delete(DELETE)
+    .put(checkToken,PUT)
+    .delete(checkToken,DELETE)
 
 router.route('/products/:id')
     .get(FETCH)

@@ -12,8 +12,8 @@ const POST = (req,res) => {
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }
@@ -30,8 +30,8 @@ const GET = async (req,res) => {
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }
@@ -52,7 +52,7 @@ const LOGIN = async (req,res) => {
                 })
             }else{
                 res.send({
-                    status:404,
+                    status:400,
                     message:"usrname or password wrong"
                 })
             }
@@ -75,8 +75,8 @@ const PUT = async (req,res) => {
             })
         }else{
             res.send({
-                status:404,
-                message:'something wrong'
+                status:400,
+                message:'bad request'
             })
         }
     }
@@ -91,8 +91,8 @@ const DELETE = async (req,res) => {
         })
     }else{
         res.send({
-            status:404,
-            message:'something wrong'
+            status:400,
+            message:'bad request'
         })
     }
 }

@@ -13,7 +13,7 @@ const POST = async (req,res) => {
         }
     }else{
         res.send({
-            status:404,
+            status:400,
             message:"bad request"
         })
     }
@@ -29,7 +29,7 @@ const GET = async (req,res) => {
         })
     }else{
         res.send({
-            status:404,
+            status:400,
             message:'bad request'
         })
     }
@@ -45,7 +45,7 @@ const PUT = async (req,res) => {
         })
     }else{
         res.send({
-            status:404,
+            status:400,
             message:'bad request'
         })
     }
@@ -58,13 +58,12 @@ const DELETE = async (req,res) => {
         res.send({
             status:200,
             message: 'the data deleted',
-            data:response
+            data:await response
         })
     }{
         res.send({
             status:400,
             message:'bad request',
-            err:response.message
         })
     }
 }
