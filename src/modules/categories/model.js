@@ -11,11 +11,21 @@ const insert =(categoryName,active) => {
 
 const fetchCategory = async () => {
     try {
-        let response = fetchAll('select * from categories where deleted = false')
+        let response = await fetchAll('select * from categories where deleted = false')
         return response
     } catch (err) {
         console.log(err)
     }
+}
+
+const updateActive = async (id) => {
+    let category = await fetch('update categories set active = NOT active where category_id = $1 RETURNING*',id)
+    return category
+}
+
+const fetchOne = async (id) => {
+    let category = await fetch('select * from categories where category_id = $1 and deleted = false',id)
+    return category
 }
 
 const updateCategory = async (id,categoryName) => {
@@ -41,5 +51,7 @@ module.exports = {
     insert,
     fetchCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    updateActive,
+    fetchOne
 }
