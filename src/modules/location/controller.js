@@ -2,8 +2,10 @@ const model = require('./model')
 
 
 const POST = async (req,res) => {
+    const {file} = req.files
+    console.log(req.body)
     if (req.body != null){
-        let response = await model.insert(req.body)
+        let response = await model.insert(file,req.body)
         if (response){
             res.send({
                 status:201,
@@ -36,8 +38,10 @@ const GET = async (req,res) => {
 }
 
 const PUT = async (req,res) => {
+    const {file} = req.files
+    console.log(req.body)
     if (req.body != null){
-        let response = await model.updateLocation(req.body)
+        let response = await model.updateLocation(file,req.body)
         if (response){
             res.send({
                 status:200,
@@ -71,9 +75,49 @@ const DELETE = (req,res) => {
 
 }
 
+const ACTIVE = async (req,res) => {
+    const {id} = req.body
+    if (id){
+        let response = await model.updateActive(id)
+        if (response){
+            res.send({
+                status:200,
+                message: 'the data active updated',
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
+const FETCH = async (req,res) => {
+    const {id} = req.params
+    console.log(id)
+    if (id){
+        let response = await model.fetchOne(id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the location successfully fetched',
+                data:response
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
-    DELETE
+    DELETE,
+    ACTIVE,
+    FETCH
 }
