@@ -21,7 +21,8 @@ const POST = async (req,res) => {
 }
 
 const GET = async (req,res) => {
-    let response = await model.fetchCalls()
+    const {page,limit} = req.query
+    let response = await model.fetchCalls(page,limit)
     if (response){
         res.send({
             status:200,

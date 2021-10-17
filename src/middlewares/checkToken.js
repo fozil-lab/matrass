@@ -2,9 +2,6 @@ const {verify} = require('jsonwebtoken')
 const {fetch} = require('../lib/postgres')
 
 const checkToken = async (req,res,next) => {
-    if (req.method == 'GET'){
-        next()
-    }else{
         if (req.body.token){
             const {token} = req.body
             let verifyToken = verify(token,'MyNaMeIsFoZiL')
@@ -31,7 +28,6 @@ const checkToken = async (req,res,next) => {
                 message:'you have not token'
             })
         }
-    }
 }
 
 module.exports = checkToken

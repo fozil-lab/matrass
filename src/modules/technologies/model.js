@@ -14,11 +14,16 @@ const fetchTechnology = async () => {
     return technology
 }
 
-const updateTechnology = async ({id,name,description,poster,video,active}) => {
+const updateTechnology = async ({id,name,description,poster,video}) => {
     let technology = await fetch(
-        'update technologies set name = $1,description = $2,poster = $3,video = $4,active = $5 where id =$6 RETURNING*',
-        name,description,poster,video,active,id
+        'update technologies set name = $1,description = $2,poster = $3,video = $4 where id =$5 RETURNING*',
+        name,description,poster,video,id
     )
+    return technology
+}
+
+const updateActive = async (id) => {
+    let technology = await fetch('update technologies set active = not active where id = $1 RETURNING*',id)
     return technology
 }
 
@@ -27,9 +32,15 @@ const deleteTechnology = async (id) => {
     return technology
 }
 
+const fetchOn = (id) => {
+    let response = fetch(`select * from technologies where id = $1 and deleted = false`)
+    return response
+}
+
 module.exports = {
     insert,
     fetchTechnology,
     updateTechnology,
-    deleteTechnology
+    deleteTechnology,
+    updateActive
 }

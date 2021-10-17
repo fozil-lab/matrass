@@ -20,7 +20,8 @@ const POST = async (req,res) => {
 }
 
 const GET = async (req,res) => {
-   let orders = await model.fetchOrders()
+    const {page,limit} = req.query
+   let orders = await model.fetchOrders(page,limit)
     if (orders){
         res.send({
             status:200,
@@ -36,13 +37,13 @@ const GET = async (req,res) => {
 }
 
 const PUT = async (req,res) => {
-    const {id,active} = req.body
-    if (id && active){
-        let response = await model.updateOrders(id,active)
+    const {id} = req.params
+    if (id){
+        let response = await model.updateOrders(id)
         if (response){
             res.send({
                 status:200,
-                message:'the order updated',
+                message:'the order active updated',
             })
         }else{
             res.send({

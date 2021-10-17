@@ -11,9 +11,17 @@ const insert = async ({product,clientContact,clientName,count}) => {
     return order
 }
 
-const fetchOrders = async () => {
+const fetchOrders = async (page,limit) => {
     try{
-        let orders = await fetchAll('select * from orders o inner join products p using(product_id)')
+        page = (page-1)*limit
+        let orders = await fetchAll(
+            `select 
+                    o.order_id,o.client_name,o.client_contact,
+                    o.date,o.active,o.count,p.product_name
+                   from orders o 
+                   join products p 
+                   on o.product_id = p.product_id
+                   offset $1 limit $2`,page,limit)
         for (let order of orders) {
             delete order.product_id
         }
@@ -23,8 +31,8 @@ const fetchOrders = async () => {
     }
 }
 
-const updateOrders = async (id,active) => {
-    let order = await fetch('update orders set active = $1 where order_id = $2 RETURNING*',active,id)
+const updateOrders = async (id) => {
+    let order = await fetch('update orders set active = not active where order_id = $1 RETURNING*',id)
     return order
 }
 
