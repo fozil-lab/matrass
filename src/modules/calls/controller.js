@@ -1,14 +1,15 @@
 const model = require('./model')
 
 
-const POST = (req,res) => {
+const POST = async (req,res) => {
     const {phoneNumber} = req.body
     if (phoneNumber){
-        let response = model.insert(phoneNumber)
+        let response = await model.insert(phoneNumber)
         if (response){
             res.send({
                 status:201,
-                message: 'The data successfully created'
+                message: 'The data successfully created',
+                data:response
             })
         }
     }else{
@@ -21,7 +22,6 @@ const POST = (req,res) => {
 
 const GET = async (req,res) => {
     let response = await model.fetchCalls()
-    console.log(response)
     if (response){
         res.send({
             status:200,
@@ -37,8 +37,8 @@ const GET = async (req,res) => {
 }
 
 const PUT = async (req,res) => {
-    const {id,phoneNumber,active} = req.body
-    let response = await model.updateCalls(id,phoneNumber,active)
+    const {id,phoneNumber} = req.body
+    let response = await model.updateCalls(id,phoneNumber)
     if (response){
         res.send({
             status:200,
@@ -68,9 +68,28 @@ const DELETE = async (req,res) => {
     }
 }
 
+const ACTIVE = async (req,res) => {
+    const {id} = req.body
+    if (id){
+        let response = await model.updateActive(id)
+        if (response){
+            res.send({
+                status:200,
+                message: 'the data active updated',
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
-    DELETE
+    DELETE,
+    ACTIVE
 }
