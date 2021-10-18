@@ -61,7 +61,7 @@ const DELETE = (req,res) => {
         let response = model.deleteProducts(id)
         if (response){
             res.send({
-                status:201,
+                status:200,
                 message:'the date updated'
             })
         }else{
