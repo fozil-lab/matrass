@@ -12,8 +12,8 @@ values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING*
 
 const update = `
 update products set product_name=$2,price=$3,yuklama = $4,kafolat = $5, olchami = $6,
-sigimi = $7,description = $8,category_id = $9,status = $10,aksiya_price = $11,img_links = $12,active=$13
-where product_id = $1
+sigimi = $7,description = $8,category_id = $9,status = $10,aksiya_price = $11,img_links = $12
+where product_id = $1 RETURNING*
 `
 
 
@@ -58,34 +58,40 @@ const fetchProducts = async () => {
     }
 }
 
-const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami,sigimi,description,category,status,aksiyaPrice,active}) => {
+const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami,sigimi,description,category,status,aksiyaPrice}) => {
     try {
         let product = await fetch('select * from products where product_id = $1',id);
         let imgLinks = []
-        for (let imgLink of product.img_links) {
-            fs.unlink(path.join(process.cwd(),'src','uploads','images',imgLink), (err) => console.log(err))
-        }
+
         for (let fileElement of file) {
             fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
             imgLinks.push(fileElement.name)
         }
         let categoryId = await fetch('select * from categories where category_name = $1',category)
-        await fetch(update,
+        let products = await fetch(update,
             id,productName,price,
             yuklama,kafolat,olchami,sigimi,
             description,categoryId.category_id,
-            checkStatus(status),aksiyaPrice,imgLinks,active
+            checkStatus(status),aksiyaPrice,imgLinks
         )
-        return true
+        for (let imgLink of product.img_links) {
+            fs.unlink(path.join(process.cwd(),'src','uploads','images',imgLink), (err) => console.log(err))
+        }
+        return products
     } catch (err) {
         return err
     }
 }
 
+const updateActive = async (id) => {
+    let product = await fetch('update products set active = not active where product_id = $1',id)
+    return product
+}
+
 const deleteProducts = async (id) => {
     try {
-        await fetch('update products set deleted = true where product_id = $1',id)
-        return true
+        let product = await fetch('update products set deleted = true where product_id = $1 RETURNING*',id)
+        return product
     } catch (err) {
         return err
     }
@@ -105,5 +111,6 @@ module.exports = {
     fetchProducts,
     updateProducts,
     deleteProducts,
-    fetchOne
+    fetchOne,
+    updateActive
 }

@@ -10,7 +10,7 @@ const app = express()
 
 let corsSettings = cors({
     "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,delete",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
 })

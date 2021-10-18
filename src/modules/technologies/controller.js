@@ -70,9 +70,46 @@ const DELETE = (req,res) => {
     }
 }
 
+const FETCH = async (req,res) => {
+    if (req.params.id){
+        let response = await model.fetchOne(req.params.id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the data successfully fetched',
+                data:response
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
+const ACTIVE = async (req,res) => {
+    if (req.body.id){
+        let response = await model.updateActive(req.body.id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the data active successfully updated',
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
-    DELETE
+    DELETE,
+    ACTIVE,
+    FETCH
 }

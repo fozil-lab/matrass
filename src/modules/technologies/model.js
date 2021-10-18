@@ -32,7 +32,7 @@ const deleteTechnology = async (id) => {
     return technology
 }
 
-const fetchOn = (id) => {
+const fetchOne = (id) => {
     let response = fetch(`select * from technologies where id = $1 and deleted = false`)
     return response
 }
@@ -42,5 +42,6 @@ module.exports = {
     fetchTechnology,
     updateTechnology,
     deleteTechnology,
-    updateActive
+    updateActive,
+    fetchOne
 }
