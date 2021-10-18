@@ -11,7 +11,7 @@ const insert = async (file,{location,text,address,active}) => {
     }
     let geoLocation = await fetch(
         'insert into geo_location (location,text,address,active,img_link) values ($1,$2,$3,$4,$5) RETURNING*',
-        location,text,address,active ? active : true,img_link
+        location,text,address,active,img_link
     )
     return geoLocation
 }
