@@ -58,7 +58,7 @@ const DELETE = (req,res) => {
         let response = model.deleteTechnology(id)
         if (response){
             res.send({
-                status:20,
+                status:200,
                 message:'the data successfully deleted',
             })
         }else if (!response){
