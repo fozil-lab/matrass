@@ -19,9 +19,10 @@ const fetchOrders = async (page,limit) => {
                     o.order_id,o.client_name,o.client_contact,
                     o.date,o.active,o.count,p.product_name
                    from orders o 
-                   join products p 
+                   join products p
                    on o.product_id = p.product_id
-                   offset $1 limit $2 order by o.order_id`,page,limit)
+                   order by o.order_id desc
+                   offset $1 limit $2`,page,limit)
         for (let order of orders) {
             delete order.product_id
         }
