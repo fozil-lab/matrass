@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { POST,GET,PUT } = require('./controller.js')
 const checkToken = require('../../middlewares/checkToken')
 router.route('/orders')
-    .post(checkToken,POST)
+    .post(POST)
     .get(GET)
 
 router.route('/orders/:id')

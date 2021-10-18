@@ -11,7 +11,7 @@ const insert = async (phoneNumber) => {
 
 const fetchCalls = async (page,limit) => {
     page=(page-1)*limit
-    let calls = await fetchAll('select * from calls where deleted = false offset $1 limit $2',page,limit)
+    let calls = await fetchAll('select * from calls where deleted = false order by id desc offset $1 limit $2',page,limit)
     return calls
 }
 
