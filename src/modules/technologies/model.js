@@ -3,7 +3,7 @@ const {fetch,fetchAll} = require('../../lib/postgres')
 
 const insert = async ({name, description,poster,video,active}) => {
     let technology = await fetch(
-        'insert into technologies (name,description,poster,video,active) values ($1,$2,$3,$4,$5) RETURNING*',
+        'insert into technologies (name,description,poster_link,video_link,active) values ($1,$2,$3,$4,$5) RETURNING*',
         name,description,poster,video,active
     )
     return technology
