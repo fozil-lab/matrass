@@ -3,13 +3,14 @@ const model = require('./model')
 const POST = async (req,res) => {
     const {title} = req.body
     const {file} = req.files
+    console.log(file,title)
     if (file && title){
         let response = await model.insert(file,title)
         if (response){
             res.send({
                 status:201,
                 message: 'The data successfully created',
-                data: await response
+                data: response
             })
         }
     }else{

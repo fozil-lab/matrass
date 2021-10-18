@@ -2,7 +2,7 @@ const {fetch,fetchAll} = require('../../lib/postgres')
 
 const insert =(categoryName,active) => {
     try {
-        let categories = fetch('insert into categories (category_name,active) values ($1,$2) RETURNING*',categoryName,active ? active : true)
+        let categories = fetch('insert into categories (category_name,active) values ($1,$2) RETURNING*',categoryName,active)
         return categories
     } catch (err){
         console.log(err)

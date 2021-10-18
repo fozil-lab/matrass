@@ -8,6 +8,7 @@ const insert =(file,title) => {
         let fileName = file.name;
         file.mv(path.join(process.cwd(),'src', 'uploads', 'images', fileName), async (err) => console.log(err))
         let carousel = fetch('insert into carousel (title,img_link) values ($1,$2) RETURNING*',title,fileName)
+        console.log(carousel)
         return carousel
     } catch (err){
         console.log(err)

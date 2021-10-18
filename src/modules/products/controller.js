@@ -44,7 +44,7 @@ const PUT = (req,res) => {
         if (response){
             res.send({
                 status:201,
-                message:'the date updated'
+                message:'the date deleted'
             })
         }else{
             res.send({

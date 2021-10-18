@@ -8,13 +8,8 @@ const PORT = process.env.PORT || 4500
 
 const app = express()
 
-let corsSettings = cors({
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-})
-app.use(corsSettings)
+
+app.use(cors({ origin: '*' }))
 
 app.use(express.json());
 app.use( express.static(path.join(__dirname, 'uploads', 'images')) )
