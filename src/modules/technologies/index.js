@@ -9,5 +9,5 @@ router.route('/technology')
     patch(checkToken,ACTIVE)
 
 router.route('/technology/:id')
-    .get(checkToken,FETCH)
+    .get(FETCH)
 module.exports = router

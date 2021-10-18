@@ -94,7 +94,6 @@ const FETCH = async (req,res) => {
 
 const ACTIVE = async (req,res) => {
     const {id} = req.body
-    if (id){
         let response = await model.updateActive(id)
         if (response){
             res.send({
@@ -107,7 +106,6 @@ const ACTIVE = async (req,res) => {
                 message:'bad request'
             })
         }
-    }
 }
 
 module.exports = {

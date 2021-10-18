@@ -11,7 +11,7 @@ const insert =(categoryName,active) => {
 
 const fetchCategory = async () => {
     try {
-        let response = await fetchAll('select * from categories where deleted = false')
+        let response = await fetchAll('select * from categories where deleted = false order by category_id')
         return response
     } catch (err) {
         console.log(err)

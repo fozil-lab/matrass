@@ -32,8 +32,8 @@ const deleteTechnology = async (id) => {
     return technology
 }
 
-const fetchOne = (id) => {
-    let response = fetch(`select * from technologies where id = $1 and deleted = false`)
+const fetchOne = async(id) => {
+    let response = await fetch(`select * from technologies where id = $1 and deleted = false`,id)
     return response
 }
 

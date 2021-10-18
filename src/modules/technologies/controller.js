@@ -71,8 +71,9 @@ const DELETE = (req,res) => {
 }
 
 const FETCH = async (req,res) => {
+    const {id} = req.params
     if (req.params.id){
-        let response = await model.fetchOne(req.params.id)
+        let response = await model.fetchOne(id)
         if (response){
             res.send({
                 status:200,
