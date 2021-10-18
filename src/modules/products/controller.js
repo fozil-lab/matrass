@@ -56,7 +56,7 @@ const PUT = (req,res) => {
 }
 
 const DELETE = (req,res) => {
-    const {id} = req.id
+    const {id} = req.body
     if (id){
         let response = model.deleteProducts(id)
         if (response){
