@@ -43,8 +43,13 @@ const insert = async (file,{productName,price,yuklama,kafolat,olchami,sigimi,des
 
 const fetchProducts = async () => {
     try {
-        let products = await fetchAll('select * from products p inner join categories c using(category_id) where p.deleted = false')
-        console.log(await products)
+        let products = await fetchAll(`select
+        p.product_id,p.product_name,p.price,p.yuklama,
+        p.kafolat,p.olchami,p.sigimi,p.active,p.description,
+        p.date,p.aksiya_price,p.status,p.img_links,c.category_name  
+        from products p inner join categories c using(category_id)
+        where p.deleted = false`)
+        console.log(products)
         for (let productElement of products) {
             delete productElement.category_id
             let images = productElement.img_links
@@ -54,7 +59,7 @@ const fetchProducts = async () => {
         }
         return products
     } catch (err) {
-        return err
+        console.log(err)
     }
 }
 
