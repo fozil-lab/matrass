@@ -5,8 +5,7 @@ router.route('/technology')
     .post(checkToken,POST)
     .get(GET)
     .put(checkToken,PUT)
-    .delete(checkToken,DELETE).
-    patch(checkToken,ACTIVE)
+    .delete(checkToken,DELETE)
 
 router.route('/technology/:id')
     .get(FETCH)

@@ -7,7 +7,6 @@ router.route('/location')
     .get(GET)
     .put(checkToken,PUT)
     .delete(checkToken,DELETE)
-    .patch(checkToken,ACTIVE)
 
 router.route('/location/:id')
     .get(FETCH)

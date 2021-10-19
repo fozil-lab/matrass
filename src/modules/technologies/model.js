@@ -14,16 +14,11 @@ const fetchTechnology = async () => {
     return technology
 }
 
-const updateTechnology = async ({id,name,description,poster,video}) => {
+const updateTechnology = async ({id,name,description,poster,video,active}) => {
     let technology = await fetch(
-        'update technologies set name = $1,description = $2,poster_link = $3,video_link = $4 where id =$5 RETURNING*',
-        name,description,poster,video,id
+        'update technologies set name = $1,description = $2,poster_link = $3,video_link = $4,active = $5 where id =$6 RETURNING*',
+        name,description,poster,video,active,id
     )
-    return technology
-}
-
-const updateActive = async (id) => {
-    let technology = await fetch('update technologies set active = not active where id = $1 RETURNING*',id)
     return technology
 }
 
@@ -42,6 +37,5 @@ module.exports = {
     fetchTechnology,
     updateTechnology,
     deleteTechnology,
-    updateActive,
     fetchOne
 }
