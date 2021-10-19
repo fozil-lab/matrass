@@ -2,20 +2,21 @@ const model = require('./model')
 
 const POST  = async (req,res) => {
     const {file} = req.files
-    if (req.body != null){
-        let response = await model.insert(file,req.body)
-        if (response.product_id){
-            res.send({
-                status:201,
-                message:'the date created'
-            })
-        }else{
-            res.send({
-                status:400,
-                message:'bad request'
-            })
-        }
-    }
+    console.log(file)
+    // if (req.body != null){
+    //     let response = await model.insert(file,req.body)
+    //     if (response.product_id){
+    //         res.send({
+    //             status:201,
+    //             message:'the date created'
+    //         })
+    //     }else{
+    //         res.send({
+    //             status:400,
+    //             message:'bad request'
+    //         })
+    //     }
+    // }
 }
 
 const GET = async (req,res) => {
@@ -38,22 +39,21 @@ const GET = async (req,res) => {
 
 const PUT = (req,res) => {
     const {file} = req.files
-    console.log(file)
 
-    // if (req.body != null){
-    //     let response = model.updateProducts(file,req.body)
-    //     if (response){
-    //         res.send({
-    //             status:201,
-    //             message:'the date deleted'
-    //         })
-    //     }else{
-    //         res.send({
-    //             status:400,
-    //             message:'bad request'
-    //         })
-    //     }
-    // }
+    if (req.body != null){
+        let response = model.updateProducts(file,req.body)
+        if (response){
+            res.send({
+                status:201,
+                message:'the date deleted'
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
 }
 
 const DELETE = (req,res) => {
