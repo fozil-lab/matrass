@@ -2,21 +2,20 @@ const model = require('./model')
 
 const POST  = async (req,res) => {
     const {file} = req.files
-    console.log(file)
-    // if (req.body != null){
-    //     let response = await model.insert(file,req.body)
-    //     if (response.product_id){
-    //         res.send({
-    //             status:201,
-    //             message:'the date created'
-    //         })
-    //     }else{
-    //         res.send({
-    //             status:400,
-    //             message:'bad request'
-    //         })
-    //     }
-    // }
+    if (req.body != null){
+        let response = await model.insert(file,req.body)
+        if (response.product_id){
+            res.send({
+                status:201,
+                message:'the data created'
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
 }
 
 const GET = async (req,res) => {
@@ -45,7 +44,7 @@ const PUT = (req,res) => {
         if (response){
             res.send({
                 status:201,
-                message:'the date deleted'
+                message:'the data deleted'
             })
         }else{
             res.send({
@@ -63,7 +62,7 @@ const DELETE = (req,res) => {
         if (response){
             res.send({
                 status:200,
-                message:'the date updated'
+                message:'the data updated'
             })
         }else{
             res.send({
