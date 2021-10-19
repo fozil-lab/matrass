@@ -84,9 +84,15 @@ const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami
 }
 
 const updateActive = async (id) => {
-    let product = await fetch('update products set active = not active where product_id = $1',id)
-    console.log(product)
-    return product
+    try{
+        id = parseInt(id)
+        console.log(id)
+        let product = await fetch('update products set active = NOT active where product_id = $1 RETURNING*',id)
+        console.log(product)
+        return product
+    } catch (err){
+        console.log(err)
+    }
 }
 
 const deleteProducts = async (id) => {
