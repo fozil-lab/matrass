@@ -10,5 +10,5 @@ router.route('/location')
     .patch(checkToken,ACTIVE)
 
 router.route('/location/:id')
-    .get(checkToken,FETCH)
+    .get(FETCH)
 module.exports = router
