@@ -38,7 +38,6 @@ const GET = async (req,res) => {
 
 const PUT = (req,res) => {
     const {file} = req.files
-
     if (req.body != null){
         let response = model.updateProducts(file,req.body)
         if (response){
