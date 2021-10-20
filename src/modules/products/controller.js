@@ -43,8 +43,8 @@ const PUT = (req,res) => {
         let response = model.updateProducts(file,req.body)
         if (response){
             res.send({
-                status:201,
-                message:'the data deleted'
+                status:200,
+                message:'the data updated'
             })
         }else{
             res.send({
