@@ -39,7 +39,6 @@ const GET = async (req,res) => {
 
 const PUT = async (req,res) => {
     const {file} = req.files
-    console.log(req.body)
     if (req.body != null){
         let response = await model.updateLocation(file,req.body)
         if (response){

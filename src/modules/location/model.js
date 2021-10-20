@@ -30,9 +30,15 @@ const fetchLocation = async () => {
 const updateLocation = async (file,{id,location,text,address,active}) => {
     let locate = await fetch('select * from geo_location where id = $1',id);
     let imgLinks = []
-    for (let fileElement of file) {
-        fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
-        imgLinks.push(fileElement.name)
+    if (file && typeof file == 'object'){
+        let fileName = file.name
+        file.mv(path.join(process.cwd(),'src','uploads','images',fileName))
+        imgLinks.push(fileName)
+    }else if (file && Array.isArray(file)){
+        for (let fileElement of file) {
+            fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
+            imgLinks.push(fileElement.name)
+        }
     }
     let geoLocation = await fetch(
         'update geo_location set location = $1,text = $2,address = $3,active = $4,img_link = $5 where id =$6 RETURNING*',
