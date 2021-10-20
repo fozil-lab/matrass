@@ -68,10 +68,17 @@ const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami
         let product = await fetch('select * from products where product_id = $1',id);
         let imgLinks = []
 
-        for (let fileElement of file) {
-            fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
-            imgLinks.push(fileElement.name)
+        if (file && typeof file === 'object'){
+            let fileName = file.name
+            file.mv(path.join(process.cwd(),'src','uploads','images',fileName))
+            imgLinks.push(fileName)
+        }else if (file && Array.isArray(file)){
+            for (let fileElement of file) {
+                fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
+                imgLinks.push(fileElement.name)
+            }
         }
+
         let categoryId = await fetch('select * from categories where category_name = $1',category)
         let products = await fetch(update,
             id,productName,price,
