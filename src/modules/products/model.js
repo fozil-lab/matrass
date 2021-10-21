@@ -67,8 +67,7 @@ const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami
     try {
         let product = await fetch('select * from products where product_id = $1',id);
         let imgLinks = []
-
-        if (file && typeof file === 'object'){
+        if (file && !Array.isArray(file)){
             let fileName = file.name
             file.mv(path.join(process.cwd(),'src','uploads','images',fileName))
             imgLinks.push(fileName)
