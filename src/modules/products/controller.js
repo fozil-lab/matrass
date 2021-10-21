@@ -36,10 +36,11 @@ const GET = async (req,res) => {
 }
 
 
-const PUT = (req,res) => {
+const PUT = async (req,res) => {
     const {file} = req.files
     if (req.body != null){
-        let response = model.updateProducts(file,req.body)
+        let response = await model.updateProducts(file,req.body)
+        console.log(response)
         if (response){
             res.send({
                 status:200,
