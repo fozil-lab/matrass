@@ -48,7 +48,7 @@ const fetchProducts = async () => {
         p.kafolat,p.olchami,p.sigimi,p.active,p.description,
         p.date,p.aksiya_price,p.status,p.img_links,c.category_name  
         from products p inner join categories c using(category_id)
-        where p.deleted = false`)
+        where p.deleted = false order by p.product_id`)
         console.log(products)
         for (let productElement of products) {
             delete productElement.category_id
@@ -86,6 +86,7 @@ const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami
             description,categoryId.category_id,
             checkStatus(status),aksiyaPrice,imgLinks
         )
+        console.log(products);
         for (let imgLink of product.img_links) {
             fs.unlink(path.join(process.cwd(),'src','uploads','images',imgLink), (err) => console.log(err))
         }
