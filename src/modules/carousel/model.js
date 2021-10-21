@@ -15,7 +15,7 @@ const insert =(file,title) => {
 }
 
 const fetchCarousel = async () => {
-    let response = await fetchAll('select * from carousel where active = true');
+    let response = await fetchAll('select * from carousel where active = true order by id');
     for (let carousel of response) {
         carousel.img_link = 'http://localhost:4500/' + carousel.img_link
     }
