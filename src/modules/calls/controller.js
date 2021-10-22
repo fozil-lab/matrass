@@ -88,10 +88,30 @@ const ACTIVE = async (req,res) => {
     }
 }
 
+const SEARCH = async (req,res) => {
+    const  {phoneNumber} = req.query
+    if (phoneNumber){
+        let response = await model.callsSearch(phoneNumber)
+        if (response){
+            res.send({
+                status:200,
+                message:"the search calls successfully completed",
+                data:response
+            })
+        }else{
+            res.send({
+                status:404,
+                message:'the calls not found'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
     DELETE,
-    ACTIVE
+    ACTIVE,
+    SEARCH
 }

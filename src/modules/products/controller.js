@@ -35,6 +35,26 @@ const GET = async (req,res) => {
     }
 }
 
+const SEARCH = async (req,res) => {
+    const{productName} = req.query
+    if (productName){
+        let response = await model.searchProduct(productName)
+        console.log(response)
+        if (response){
+            res.send({
+                status:200,
+                message:'the search product successfully completed',
+                data:response
+            })
+        }else{
+            res.send({
+                status:404,
+                message:"the product not found"
+            })
+        }
+    }
+}
+
 
 const PUT = async (req,res) => {
     const {file} = req.files
@@ -114,5 +134,6 @@ module.exports = {
     PUT,
     DELETE,
     FETCH,
-    ACTIVE
+    ACTIVE,
+    SEARCH
 }

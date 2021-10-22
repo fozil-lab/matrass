@@ -19,9 +19,28 @@ const POST = async (req,res) => {
     }
 }
 
+const SEARCH = async (req,res) => {
+    const {clientName} = req.query
+    if (clientName){
+        let response = await model.orderSearch(clientName)
+        if (response){
+            res.send({
+                status:200,
+                message:'the order search successfully completed',
+                data:response
+            })
+        }else{
+            res.send({
+                status:404,
+                message:'the order not found'
+            })
+        }
+    }
+}
+
 const GET = async (req,res) => {
     const {page,limit} = req.query
-   let orders = await model.fetchOrders(page,limit)
+    let orders = await model.fetchOrders(page,limit)
     if (orders){
         res.send({
             status:200,
@@ -57,4 +76,5 @@ module.exports = {
     POST,
     GET,
     PUT,
+    SEARCH
 }

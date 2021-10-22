@@ -70,6 +70,7 @@ const FETCH = async (req,res) => {
         }
     }
 }
+
 module.exports = {
     POST,
     GET,

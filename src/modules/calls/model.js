@@ -1,4 +1,5 @@
 const {fetch,fetchAll} = require('../../lib/postgres')
+const {LOGIN} = require("../users/controller");
 
 const insert = async (phoneNumber) => {
     try {
@@ -38,11 +39,18 @@ const deleteCalls = async (id) => {
     }
 }
 
+const callsSearch = async (phoneNumber) => {
+    phoneNumber = '+' + phoneNumber.trim()
+    let calls = await fetch('select * from calls where phone_number = $1',phoneNumber)
+    return calls
+}
+
 
 module.exports = {
     insert,
     fetchCalls,
     updateCalls,
     deleteCalls,
-    updateActive
+    updateActive,
+    callsSearch
 }

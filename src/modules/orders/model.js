@@ -37,10 +37,15 @@ const updateOrders = async (id) => {
     return order
 }
 
+const orderSearch = async (clientName) => {
+    let order = await fetch('select * from orders where client_name = $1',clientName)
+    return order
+}
 
 
 module.exports = {
     insert,
     fetchOrders,
-    updateOrders
+    updateOrders,
+    orderSearch
 }

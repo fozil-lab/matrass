@@ -117,8 +117,19 @@ const deleteProducts = async (id) => {
 const fetchOne = async (id) => {
     let product = await fetch('select * from products p inner join categories c using(category_id) where p.product_id = $1',id)
     delete product.category_id
-    for (let imgLink of product.img_links) {
-        imgLink = 'http://localhost:4500/' + imgLink
+    for (let i = 0; i < product.img_links.length; i++) {
+        let imgLinks = product.img_links
+        imgLinks[i] = 'http://localhost:4500/' + imgLinks[i]
+    }
+    return product
+}
+
+const searchProduct = async (productName) => {
+    let product = await fetch('select * from products inner join categories using(category_id) where product_name = $1',productName)
+    delete product.category_id
+    for (let i = 0; i < product.img_links.length; i++) {
+        let imgLinks = product.img_links
+        imgLinks[i] = 'http://localhost:4500/' + imgLinks[i]
     }
     return product
 }
@@ -129,5 +140,6 @@ module.exports = {
     updateProducts,
     deleteProducts,
     fetchOne,
-    updateActive
+    updateActive,
+    searchProduct
 }
