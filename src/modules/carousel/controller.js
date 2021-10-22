@@ -71,9 +71,29 @@ const DELETE = async (req,res) => {
     }
 }
 
+const FETCH = async (req,res) => {
+    const {id} = req.params
+    if (id){
+        let response = await model.fetchOne(id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the carousel successfully fetched',
+                data:response
+            })
+        }else{
+            res.send({
+                status:404,
+                message:'the carousel not found'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
-    DELETE
+    DELETE,
+    FETCH
 }

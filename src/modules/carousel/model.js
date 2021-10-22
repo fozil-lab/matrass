@@ -38,6 +38,11 @@ const updateCarousel = async (id,title,file) => {
     }
 }
 
+const fetchOne = async (id) => {
+    let carousel = await fetch(`select * from carousel where id = $1`,id)
+    return carousel
+}
+
 const deleteCarousel = async (id) => {
     let carousel = await fetch('update carousel set active = false where id = $1',id)
     return true
@@ -47,5 +52,6 @@ module.exports = {
     insert,
     fetchCarousel,
     updateCarousel,
-    deleteCarousel
+    deleteCarousel,
+    fetchOne
 }

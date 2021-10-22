@@ -19,13 +19,13 @@ const POST  = async (req,res) => {
 }
 
 const GET = async (req,res) => {
-    let response = model.fetchProducts()
+    let response = await model.fetchProducts()
     console.log(response)
     if (response){
         res.send({
             status:200,
             message:'the data successfully fetched',
-            data:await response
+            data:response
         })
     }else{
         res.send({

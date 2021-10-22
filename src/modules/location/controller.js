@@ -3,7 +3,6 @@ const model = require('./model')
 
 const POST = async (req,res) => {
     const {file} = req.files
-    console.log(req.body)
     if (req.body != null){
         let response = await model.insert(file,req.body)
         if (response){
