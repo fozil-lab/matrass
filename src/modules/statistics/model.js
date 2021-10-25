@@ -14,6 +14,11 @@ const fetchStats = async () => {
     return stats
 }
 
+const fetchOne = async (id) => {
+    let stats = await fetch('select * from statistics where id =$1',id)
+    return stats
+}
+
 const updateStats = async ({id,experiance,clients,graduate,delivery}) => {
     let stats = await fetch(
         'update statistics set experiance = $1,clients = $2,graduate = $3,delivery = $4 where id =$5 RETURNING*',
@@ -25,5 +30,6 @@ const updateStats = async ({id,experiance,clients,graduate,delivery}) => {
 module.exports = {
     insert,
     fetchStats,
-    updateStats
+    updateStats,
+    fetchOne
 }

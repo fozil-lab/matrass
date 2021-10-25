@@ -12,8 +12,8 @@ values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING*
 
 const update = `
 update products set product_name=$2,price=$3,yuklama = $4,kafolat = $5, olchami = $6,
-sigimi = $7,description = $8,category_id = $9,status = $10,aksiya_price = $11,img_links = $12,active=$13
-where product_id = $1
+sigimi = $7,description = $8,category_id = $9,status = $10,aksiya_price = $11,img_links = $12
+where product_id = $1 RETURNING*
 `
 
 
@@ -43,8 +43,13 @@ const insert = async (file,{productName,price,yuklama,kafolat,olchami,sigimi,des
 
 const fetchProducts = async () => {
     try {
-        let products = await fetchAll('select * from products p inner join categories c using(category_id) where p.deleted = false')
-        console.log(await products)
+        let products = await fetchAll(`select
+        p.product_id,p.product_name,p.price,p.yuklama,
+        p.kafolat,p.olchami,p.sigimi,p.active,p.description,
+        p.date,p.aksiya_price,p.status,p.img_links,c.category_name  
+        from products p inner join categories c using(category_id)
+        where p.deleted = false`)
+        console.log(products)
         for (let productElement of products) {
             delete productElement.category_id
             let images = productElement.img_links
@@ -54,38 +59,56 @@ const fetchProducts = async () => {
         }
         return products
     } catch (err) {
-        return err
+        console.log(err)
     }
 }
 
-const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami,sigimi,description,category,status,aksiyaPrice,active}) => {
+const updateProducts = async (file,{id,productName,price,yuklama,kafolat,olchami,sigimi,description,category,status,aksiyaPrice}) => {
     try {
         let product = await fetch('select * from products where product_id = $1',id);
         let imgLinks = []
-        for (let imgLink of product.img_links) {
-            fs.unlink(path.join(process.cwd(),'src','uploads','images',imgLink), (err) => console.log(err))
+        if (file && !Array.isArray(file)){
+            let fileName = file.name
+            file.mv(path.join(process.cwd(),'src','uploads','images',fileName))
+            imgLinks.push(fileName)
+        }else if (file && Array.isArray(file)){
+            for (let fileElement of file) {
+                fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
+                imgLinks.push(fileElement.name)
+            }
         }
-        for (let fileElement of file) {
-            fileElement.mv(path.join(process.cwd(),'src','uploads','images',fileElement.name))
-            imgLinks.push(fileElement.name)
-        }
+
         let categoryId = await fetch('select * from categories where category_name = $1',category)
-        await fetch(update,
+        let products = await fetch(update,
             id,productName,price,
             yuklama,kafolat,olchami,sigimi,
             description,categoryId.category_id,
-            checkStatus(status),aksiyaPrice,imgLinks,active
+            checkStatus(status),aksiyaPrice,imgLinks
         )
-        return true
+        for (let imgLink of product.img_links) {
+            fs.unlink(path.join(process.cwd(),'src','uploads','images',imgLink), (err) => console.log(err))
+        }
+        return products
     } catch (err) {
         return err
     }
 }
 
+const updateActive = async (id) => {
+    try{
+        id = parseInt(id)
+        let product = await fetch('update products set active = NOT active where product_id = $1 RETURNING*',id)
+        console.log(product)
+        return product
+    } catch (err){
+        console.log(err)
+    }
+}
+
 const deleteProducts = async (id) => {
     try {
-        await fetch('update products set deleted = true where product_id = $1',id)
-        return true
+        let product = await fetch('update products set deleted = true where product_id = $1 RETURNING*',id)
+        return product
     } catch (err) {
         return err
     }
@@ -94,8 +117,19 @@ const deleteProducts = async (id) => {
 const fetchOne = async (id) => {
     let product = await fetch('select * from products p inner join categories c using(category_id) where p.product_id = $1',id)
     delete product.category_id
-    for (let imgLink of product.img_links) {
-        imgLink = 'http://localhost:4500/' + imgLink
+    for (let i = 0; i < product.img_links.length; i++) {
+        let imgLinks = product.img_links
+        imgLinks[i] = 'http://localhost:4500/' + imgLinks[i]
+    }
+    return product
+}
+
+const searchProduct = async (productName) => {
+    let product = await fetch('select * from products inner join categories using(category_id) where product_name = $1',productName)
+    delete product.category_id
+    for (let i = 0; i < product.img_links.length; i++) {
+        let imgLinks = product.img_links
+        imgLinks[i] = 'http://localhost:4500/' + imgLinks[i]
     }
     return product
 }
@@ -105,5 +139,7 @@ module.exports = {
     fetchProducts,
     updateProducts,
     deleteProducts,
-    fetchOne
+    fetchOne,
+    updateActive,
+    searchProduct
 }

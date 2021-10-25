@@ -49,6 +49,7 @@ const LOGIN = async (req,res) => {
                     message:'you successfully logged in',
                     data:response,
                     token:token,
+                    verifyToken:verify(token,'MyNaMeIsFoZiL')
                 })
             }else{
                 res.send({

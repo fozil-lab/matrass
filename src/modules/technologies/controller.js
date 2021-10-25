@@ -58,7 +58,7 @@ const DELETE = (req,res) => {
         let response = model.deleteTechnology(id)
         if (response){
             res.send({
-                status:20,
+                status:200,
                 message:'the data successfully deleted',
             })
         }else if (!response){
@@ -70,9 +70,29 @@ const DELETE = (req,res) => {
     }
 }
 
+const FETCH = async (req,res) => {
+    const {id} = req.params
+    if (req.params.id){
+        let response = await model.fetchOne(id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the data successfully fetched',
+                data:response
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
-    DELETE
+    DELETE,
+    FETCH
 }

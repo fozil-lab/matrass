@@ -21,7 +21,8 @@ const POST = async (req,res) => {
 }
 
 const GET = async (req,res) => {
-    let response = await model.fetchCalls()
+    const {page,limit} = req.query
+    let response = await model.fetchCalls(page,limit)
     if (response){
         res.send({
             status:200,
@@ -87,10 +88,30 @@ const ACTIVE = async (req,res) => {
     }
 }
 
+const SEARCH = async (req,res) => {
+    const  {phoneNumber} = req.query
+    if (phoneNumber){
+        let response = await model.callsSearch(phoneNumber)
+        if (response){
+            res.send({
+                status:200,
+                message:"the search calls successfully completed",
+                data:response
+            })
+        }else{
+            res.send({
+                status:404,
+                message:'the calls not found'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
     PUT,
     DELETE,
-    ACTIVE
+    ACTIVE,
+    SEARCH
 }

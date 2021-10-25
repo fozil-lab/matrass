@@ -11,5 +11,5 @@ router.route( '/categories')
 
 
 router.route('/categories/:id')
-    .get(checkToken,FETCH)
+    .get(FETCH)
 module.exports = router

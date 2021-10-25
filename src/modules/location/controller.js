@@ -3,7 +3,6 @@ const model = require('./model')
 
 const POST = async (req,res) => {
     const {file} = req.files
-    console.log(req.body)
     if (req.body != null){
         let response = await model.insert(file,req.body)
         if (response){
@@ -39,7 +38,6 @@ const GET = async (req,res) => {
 
 const PUT = async (req,res) => {
     const {file} = req.files
-    console.log(req.body)
     if (req.body != null){
         let response = await model.updateLocation(file,req.body)
         if (response){
@@ -75,24 +73,6 @@ const DELETE = (req,res) => {
 
 }
 
-const ACTIVE = async (req,res) => {
-    const {id} = req.body
-    if (id){
-        let response = await model.updateActive(id)
-        if (response){
-            res.send({
-                status:200,
-                message: 'the data active updated',
-            })
-        }else{
-            res.send({
-                status:400,
-                message:'bad request'
-            })
-        }
-    }
-}
-
 const FETCH = async (req,res) => {
     const {id} = req.params
     console.log(id)
@@ -118,6 +98,5 @@ module.exports = {
     GET,
     PUT,
     DELETE,
-    ACTIVE,
     FETCH
 }

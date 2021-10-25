@@ -1,6 +1,7 @@
 const model = require('./model')
 
 const POST = async (req,res) => {
+    console.log(req.body)
     const {categoryName,active} = req.body
     if (categoryName){
         let response = await model.insert(categoryName,active ? active : true)
@@ -52,6 +53,7 @@ const PUT = async (req,res) => {
 }
 
 const DELETE = async (req,res) => {
+    console.log(req.body, 'category body')
     const {id} = req.body
     let response = await model.deleteCategory(id)
     if (response){
@@ -87,6 +89,7 @@ const ACTIVE = async (req,res) => {
 }
 
 const FETCH = async (req,res) => {
+    console.log(req.body)
     const {id} = req.params
     if (id){
         let response = await model.fetchOne(id)

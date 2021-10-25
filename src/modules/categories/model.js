@@ -2,7 +2,7 @@ const {fetch,fetchAll} = require('../../lib/postgres')
 
 const insert =(categoryName,active) => {
     try {
-        let categories = fetch('insert into categories (category_name,active) values ($1,$2) RETURNING*',categoryName,active ? active : true)
+        let categories = fetch('insert into categories (category_name,active) values ($1,$2) RETURNING*',categoryName,active)
         return categories
     } catch (err){
         console.log(err)
@@ -11,7 +11,7 @@ const insert =(categoryName,active) => {
 
 const fetchCategory = async () => {
     try {
-        let response = await fetchAll('select * from categories where deleted = false')
+        let response = await fetchAll('select * from categories where deleted = false order by category_id')
         return response
     } catch (err) {
         console.log(err)

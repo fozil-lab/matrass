@@ -52,8 +52,28 @@ const PUT = async (req,res) => {
     }
 }
 
+const FETCH = async (req,res) => {
+    const {id} = req.params
+    if (id){
+        let response = await model.fetchOne(id)
+        if (response){
+            res.send({
+                status:200,
+                message:'the stats successfully fetched',
+                data:response
+            })
+        }else{
+            res.send({
+                status:400,
+                message:'bad request'
+            })
+        }
+    }
+}
+
 module.exports = {
     POST,
     GET,
-    PUT
+    PUT,
+    FETCH
 }

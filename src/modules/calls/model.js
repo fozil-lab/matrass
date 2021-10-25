@@ -1,4 +1,5 @@
 const {fetch,fetchAll} = require('../../lib/postgres')
+const {LOGIN} = require("../users/controller");
 
 const insert = async (phoneNumber) => {
     try {
@@ -9,8 +10,9 @@ const insert = async (phoneNumber) => {
     }
 }
 
-const fetchCalls = async () => {
-    let calls = await fetchAll('select * from calls where deleted = false')
+const fetchCalls = async (page,limit) => {
+    page=(page-1)*limit
+    let calls = await fetchAll('select * from calls where deleted = false order by id desc offset $1 limit $2',page,limit)
     return calls
 }
 
@@ -37,11 +39,18 @@ const deleteCalls = async (id) => {
     }
 }
 
+const callsSearch = async (phoneNumber) => {
+    phoneNumber = '+' + phoneNumber.trim()
+    let calls = await fetch('select * from calls where phone_number = $1',phoneNumber)
+    return calls
+}
+
 
 module.exports = {
     insert,
     fetchCalls,
     updateCalls,
     deleteCalls,
-    updateActive
+    updateActive,
+    callsSearch
 }

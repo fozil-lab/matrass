@@ -15,7 +15,7 @@ const insert =(file,title) => {
 }
 
 const fetchCarousel = async () => {
-    let response = await fetchAll('select * from carousel where active = true');
+    let response = await fetchAll('select * from carousel where active = true order by id');
     for (let carousel of response) {
         carousel.img_link = 'http://localhost:4500/' + carousel.img_link
     }
@@ -30,15 +30,21 @@ const updateCarousel = async (id,title,file) => {
         fs.unlinkSync(path.join(process.cwd(),'src','uploads','images',carousel.img_link));
         let fileName = file.name;
         file.mv(path.join(process.cwd(),'src', 'uploads', 'images', fileName), async (err) => console.log(err))
-        await fetch('update carousel set title = $2,img_link = $3 where id = $1',id,title ? title : carousel.title,fileName)
+        let updateCarousel = await fetch('update carousel set title = $2,img_link = $3 where id = $1 RETURNING*',id,title,fileName)
+        return updateCarousel
     }else {
-        await fetch('update carousel set title = $2,img_link = $3 where id = $1',id,title ? title : carousel.title)
+        let editCarousel = await fetch('update carousel set title = $2,img_link = $3 where id = $1 RETURNING*',id,title)
+        return editCarousel
     }
-    return true
+}
+
+const fetchOne = async (id) => {
+    let carousel = await fetch(`select * from carousel where id = $1`,id)
+    return carousel
 }
 
 const deleteCarousel = async (id) => {
-    let corousel = await fetch('update carousel set active = false where id = $1',id)
+    let carousel = await fetch('update carousel set active = false where id = $1',id)
     return true
 }
 
@@ -46,5 +52,6 @@ module.exports = {
     insert,
     fetchCarousel,
     updateCarousel,
-    deleteCarousel
+    deleteCarousel,
+    fetchOne
 }
