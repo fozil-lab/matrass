@@ -18,6 +18,7 @@ const insert = async (file,{location,text,address,active}) => {
 
 const fetchLocation = async () => {
     let location = await fetchAll('select * from geo_location where deleted = false')
+    console.log(location)
     for (let locationElement of location) {
         let images = locationElement.img_link
         for (let i = 0; i < images.length; i++) {
