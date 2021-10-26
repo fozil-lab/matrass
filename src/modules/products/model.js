@@ -21,6 +21,8 @@ where product_id = $1 RETURNING*
 
 const insert = async (file,{productName,price,yuklama,kafolat,olchami,sigimi,description,category,status,aksiyaPrice}) => {
     try {
+
+
         let imgLinks = []
         for (let fileElement of file) {
             imgLinks.push(fileElement.name)
