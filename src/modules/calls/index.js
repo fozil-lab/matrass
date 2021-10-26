@@ -7,7 +7,6 @@ router.route('/calls')
     .put(checkToken,PUT)
     .delete(checkToken,DELETE)
     .patch(checkToken,ACTIVE)
-
 router.route('/searchCalls')
     .get(SEARCH)
 
