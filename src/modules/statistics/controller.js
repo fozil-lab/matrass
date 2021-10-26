@@ -41,7 +41,7 @@ const PUT = async (req,res) => {
         if (response){
             res.send({
                 status:200,
-                message:'the order updated',
+                message:'the stats updated',
             })
         }else{
             res.send({
