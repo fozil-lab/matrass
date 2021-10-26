@@ -30,7 +30,7 @@ const fetchLocation = async () => {
 const updateLocation = async (file,{id,location,text,address,active}) => {
     let locate = await fetch('select * from geo_location where id = $1',id);
     let imgLinks = []
-    if (file && typeof file === 'object'){
+    if (file && !Array.isArray(file)){
         let fileName = file.name
         file.mv(path.join(process.cwd(),'src','uploads','images',fileName))
         imgLinks.push(fileName)
