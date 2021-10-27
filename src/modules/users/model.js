@@ -32,7 +32,6 @@ const Login = async (username,password) => {
    try {
        let user = await fetch(`select * from users where username = $1 and password = md5($2) and deleted = false`,username,password)
        user.user_img = user.user_img
-       console.log(user)
        delete user.password
        return user
    } catch (err) {
